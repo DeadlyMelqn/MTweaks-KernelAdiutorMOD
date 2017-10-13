@@ -59,6 +59,7 @@ import com.moro.mtweaks.fragments.kernel.IOFragment;
 import com.moro.mtweaks.fragments.kernel.KSMFragment;
 import com.moro.mtweaks.fragments.kernel.LEDFragment;
 import com.moro.mtweaks.fragments.kernel.LMKFragment;
+import com.moro.mtweaks.fragments.kernel.TestFragment;
 import com.moro.mtweaks.fragments.kernel.WakelockFragment;
 import com.moro.mtweaks.fragments.kernel.MiscFragment;
 import com.moro.mtweaks.fragments.kernel.ScreenFragment;
@@ -187,6 +188,7 @@ public class NavigationActivity extends BaseActivity
         }
         sFragments.add(new NavigationActivity.NavigationFragment(R.string.inputs, new InputsFragment(), R.drawable.ic_keyboard));
         sFragments.add(new NavigationActivity.NavigationFragment(R.string.kernel));
+        sFragments.add(new NavigationActivity.NavigationFragment(R.string.test, new TestFragment(), R.drawable.ic_cpu));
         sFragments.add(new NavigationActivity.NavigationFragment(R.string.cpu, new CPUFragment(), R.drawable.ic_cpu));
         if (VoltageCl1.supported()) {
             sFragments.add(new NavigationActivity.NavigationFragment(R.string.cpucl1_voltage, new CPUVoltageCl1Fragment(), R.drawable.ic_bolt));
