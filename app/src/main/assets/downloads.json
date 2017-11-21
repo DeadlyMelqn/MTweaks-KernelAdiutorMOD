@@ -261,8 +261,8 @@
       "samsung"
     ],
     "device": [
-      "heroltexx",
-      "hero2ltexx"
+      "herolte",
+      "hero2lte"
     ],
     "link": "https://raw.githubusercontent.com/Grarak/KernelAdiutor/master/download/galaxys7.json"
   },
