@@ -41,6 +41,7 @@ import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,12 +53,16 @@ import com.moro.mtweaks.activities.BannerResizerActivity;
 import com.moro.mtweaks.activities.MainActivity;
 import com.moro.mtweaks.activities.NavigationActivity;
 import com.moro.mtweaks.services.boot.ApplyOnBootService;
+import com.moro.mtweaks.socket.MbtoolConnection;
+import com.moro.mtweaks.socket.interfaces.MbtoolInterface;
 import com.moro.mtweaks.utils.Prefs;
 import com.moro.mtweaks.utils.Utils;
 import com.moro.mtweaks.utils.ViewUtils;
 import com.moro.mtweaks.utils.root.RootUtils;
 import com.moro.mtweaks.views.BorderCircleView;
 import com.moro.mtweaks.views.dialog.Dialog;
+
+import org.apache.commons.io.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -384,13 +389,37 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         RootUtils.runCommand("rm -rf /data/.mtweaks");
-                        RootUtils.runCommand("pm clear com.moro.mtweaks && reboot");
+                        //RootUtils.runCommand("pm clear com.moro.mtweaks && reboot");
+                        reboot();
+
                     }
                 });
                 alert2.show();
             }
         });
         alert.show();
+    }
+
+    private void reboot() {
+        //SharedPreferences prefs = context.getSharedPreferences("settings", 0);
+        //final boolean confirm = prefs.getBoolean("confirm_reboot", false);
+
+        new Thread() {
+            @Override
+            public void run() {
+                MbtoolConnection conn = null;
+                try {
+                    conn = new MbtoolConnection();
+                    MbtoolInterface iface = conn.getInterface();
+
+                    iface.rebootViaFramework(true);
+                } catch (Exception e) {
+                    Log.e("MTweaks", "Failed to reboot via framework", e);
+               // } finally {
+               //     IOUtils.closeQuietly(conn);
+                }
+            }
+        }.start();
     }
 
     private void editPasswordDialog(final String oldPass) {
